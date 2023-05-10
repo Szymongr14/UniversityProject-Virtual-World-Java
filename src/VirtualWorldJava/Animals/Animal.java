@@ -6,12 +6,13 @@ import VirtualWorldJava.World;
 
 public abstract class Animal extends Organism {
 
-    public Animal(World current_world,int strength, int initiative, int age, int x, int y) {
-        super(current_world,strength, initiative, age, x, y);
+    public Animal(World current_world,int strength, int initiative,int x, int y, int age) {
+        super(current_world,strength, initiative,x, y,age);
     }
 
     @Override
     public void action() {
+
     }
 
     @Override

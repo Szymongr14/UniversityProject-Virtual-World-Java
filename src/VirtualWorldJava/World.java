@@ -1,4 +1,8 @@
 package VirtualWorldJava;
+import VirtualWorldJava.Animals.*;
+import VirtualWorldJava.Plants.*;
+
+import java.awt.*;
 import java.util.Random;
 
 import java.util.Vector;
@@ -8,7 +12,15 @@ public class World {
     private boolean game_status = true;
     private Vector<Vector<Organism>> Organisms;
     private Vector<Vector<AppGUI.boardField>> Board;
+    private AppGUI appGUI;
+    private Organism human;
+    public AppGUI getAppGUI() {
+        return appGUI;
+    }
 
+    public void setAppGUI(AppGUI appGUI) {
+        this.appGUI = appGUI;
+    }
 
     public int getTurn() {
         return turn;
@@ -102,21 +114,31 @@ public class World {
             Vector<AppGUI.boardField> row = new Vector<AppGUI.boardField>(width);
             for (int j = 0; j < width; j++) {
                 row.add(new AppGUI.boardField(null));
+
+
             }
             Board.add(row);
         }
+        human = new Czlowiek(this , -1, -1,20);
+        placeOnRandomPosition(human);
+        cooldown = 0;
 
-//        placeOnRandomPosition(new Czlowiek(this, -1, -1, 20));
-//        cooldown = 0;
-//
-//        //TODO placing 2 of each species
-//        for(int i = 0; i < 2; i++) {
-//            placeOnRandomPosition(new Antylopa(this, -1, -1, 7));
-//            placeOnRandomPosition(new Lis(this, -1, -1, 7));
-//            placeOnRandomPosition(new Wilk(this, -1, -1, 9));
-//            placeOnRandomPosition(new Zolw(this, -1, -1, 40));
-//            placeOnRandomPosition(new Owca(this, -1, -1, 4));
-//        }
+        //placing first animals
+        for(int i = 0; i < 2; i++) {
+            placeOnRandomPosition(new Antylopa(this, -1, -1, 7));
+            placeOnRandomPosition(new Lis(this, -1, -1, 7));
+            placeOnRandomPosition(new Wilk(this, -1, -1, 9));
+            placeOnRandomPosition(new Zolw(this, -1, -1, 40));
+            placeOnRandomPosition(new Owca(this, -1, -1, 4));
+        }
+
+        //placing first plants
+        placeOnRandomPosition(new Trawa(this, -1, -1));
+        placeOnRandomPosition(new Trawa(this, -1, -1));
+        placeOnRandomPosition(new Mlecz(this, -1, -1));
+        placeOnRandomPosition(new Guarana(this, -1, -1));
+        placeOnRandomPosition(new Barszcz(this, -1, -1));
+        placeOnRandomPosition(new Jagody(this, -1, -1));
     }
 
 
@@ -132,7 +154,30 @@ public class World {
         //Board.get(y).set(x,new AppGUI.boardField(organism));
     }
 
-    void makeTurn(){
+    void makeTurn(int move){
+        switch(move){
+            case 0:
+                //TODO
+                System.out.println("makeTurn0");
+                break;
+            case 1:
+                //TODO
+                System.out.println("makeTurn1");
+                break;
+            case 2:
+                //TODO
+                System.out.println("makeTurn2");
+                break;
+            case 3:
+                //TODO
+                System.out.println("makeTurn3");
+                break;
+            case 4:
+                //TODO
+                System.out.println("makeTurn4");
+                break;
+        }
+
 
     }
 
@@ -141,7 +186,6 @@ public class World {
         Board.get(y).set(x,organism.draw());
         organism.setX(x);
         organism.setY(y);
-
     }
 
     void MainLoopOfTheGame(){
@@ -149,5 +193,7 @@ public class World {
 
         }
     }
+
+
 
 }
