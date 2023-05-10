@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class AppGUI extends JFrame implements ActionListener {
+public class AppGUI extends JFrame implements ActionListener, KeyListener {
     private JMenuItem newGame, load, save, exit;
     private JMenu menu;
     private JFrame jFrame;
@@ -19,7 +21,7 @@ public class AppGUI extends JFrame implements ActionListener {
         jFrame = new JFrame("Virtual World Java");
         //super("Virtual VirtualWorldJava.World Game");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(800, 800);
+        jFrame.setSize(800, 600);
         jFrame.setResizable(false);
 
         //menu
@@ -44,7 +46,9 @@ public class AppGUI extends JFrame implements ActionListener {
         mainContainer = new JPanel();
         mainContainer.setBackground(Color.orange);
         mainContainer.setLayout(null);
+        jFrame.setLayout(new CardLayout());
 
+        jFrame.addKeyListener(this);
         jFrame.add(mainContainer);
         jFrame.setVisible(true);
     }
@@ -115,6 +119,31 @@ public class AppGUI extends JFrame implements ActionListener {
     }
 
     public static class LegendContainer extends JPanel{
+
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        if(keyCode==KeyEvent.VK_UP){
+            System.out.println("elo");
+        }
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        if(keyCode==KeyEvent.VK_UP){
+            System.out.println("elo");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 }

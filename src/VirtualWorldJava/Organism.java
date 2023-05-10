@@ -21,6 +21,7 @@ public abstract class Organism {
     public abstract void collision(Organism attacker);
 
     public AppGUI.boardField draw() {
+
         return null;
     }
 
