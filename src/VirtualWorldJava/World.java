@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Vector;
 
 public class World {
-    private int turn=1,height,width,cooldown=0,humanAbilityTime=0;
+    private int turn=1,height=0,width=0,cooldown=0,humanAbilityTime=0;
     private boolean game_status = true;
     private Vector<Vector<Organism>> Organisms;
     private Vector<Vector<AppGUI.boardField>> Board;
@@ -154,7 +154,21 @@ public class World {
         //Board.get(y).set(x,new AppGUI.boardField(organism));
     }
 
-    void makeTurn(int move){
+    public void makeTurn(int move){
+//        Organism [][]active_organisms = new Organism[height][width];
+//        Organism [][]dead_organism = new Organism[height][width];
+        Vector <Organism> active_organisms = new Vector<Organism>();
+        Vector <Organism> dead_organisms = new Vector<Organism>();
+
+
+        //updating acctive organisms
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                active_organisms.add(Organisms.get(i).get(j));
+            }
+        }
+
+
         switch(move){
             case 0:
                 //TODO

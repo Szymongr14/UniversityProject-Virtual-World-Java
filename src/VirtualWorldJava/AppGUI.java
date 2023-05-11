@@ -1,6 +1,8 @@
 package VirtualWorldJava;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -9,6 +11,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     private Toolkit toolkit;
     private Dimension dimension;
     private int ODSTEP;
+    private JList list;
     private JMenu menu;
     private JFrame jFrame;
     private JPanel mainContainer;
@@ -26,7 +29,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         ODSTEP = dimension.height / 100;
 
 
-        jFrame = new JFrame("Virtual World Java");
+        jFrame = new JFrame("Virtual World Java - Szymon Groszkowski 193141");
         //super("Virtual VirtualWorldJava.World Game");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setSize(800, 800);
@@ -87,6 +90,49 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
 
+    public class OrganismAddList extends JFrame implements ActionListener, ListSelectionListener {
+        private String[] listaOrganizmow;
+        private JList<String> jList;
+        private JFrame frame;
+        private int x;
+        private int y;
+
+        public OrganismAddList(int x, int y) {
+            this.x = x;
+            this.y = y;
+            frame = new JFrame("Dodaj organizm");
+            frame.setBounds(mainContainer.getX()/2, mainContainer.getY()/2, 270, 250);
+            listaOrganizmow = new String[]{"Barszcz Sosnowskiego", "Guarana", "Mlecz", "Trawa",
+                    "Wilcze jagody", "Antylopa", "Lis", "Owca", "Wilk", "Zolw"
+            };
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            for (String item : listaOrganizmow) {
+                listModel.addElement(item);
+            }
+            jList = new JList<>(listModel);
+            jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            jList.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()) {
+                        String selectedItem = jList.getSelectedValue();
+                        System.out.println("Selected item: " + selectedItem + ", x: " + x + ", y: " + y);
+                        frame.setVisible(false);
+                    }
+                }
+            });
+            JScrollPane scrollPane = new JScrollPane(jList);
+            frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+            frame.setVisible(true);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {}
+        @Override
+        public void valueChanged(ListSelectionEvent e) {}
+    }
+
+
 
     public static class boardField extends JLabel {
         private Organism organism;
@@ -98,6 +144,8 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             if(organism != null){
                 this.setBackground(organism.getColor());
                 this.setText(organism.getSign());
+                this.setVerticalAlignment(SwingConstants.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
 
             }
             else {
@@ -121,7 +169,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         public BoardContainer(int sizeX, int sizeY){
             super();
             this.setBounds(mainContainer.getX() + ODSTEP, mainContainer.getY() + ODSTEP, mainContainer.getHeight() * 5 / 6 - ODSTEP, mainContainer.getHeight() * 5 / 6 - ODSTEP);
-            this.setBackground(Color.PINK);
+            this.setBackground(Color. BLACK);
             this.sizeX = sizeX;
             this.sizeY = sizeY;
 
@@ -136,6 +184,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                         public void mouseClicked(MouseEvent e) {
                             if(current_world.getOrganisms().get(row).get(col)==null){
                                 System.out.println("Puste pole zostało kliknięte!");
+                                OrganismAddList listaOrganizmow = new OrganismAddList(row,col);
                             }
                         }
                     });
