@@ -18,7 +18,6 @@ public class Czlowiek extends Animal{
             current_world.setCooldown(current_world.getCooldown() - 1);
         }
         if(current_world.getHumanAbilityTime() > 0){
-            //std::cout<<std::endl<< "\033[1;35mSpecjalna umiejetnosc czlowieka aktywna. Pozostalo: "<<this->currentWorld->getHumanAbilityTime()<<" tur\033[0m";
             System.out.println("Specjalna umiejetnosc czlowieka aktywna. Pozostalo: "+current_world.getHumanAbilityTime()+" tur");
             current_world.setHumanAbilityTime(current_world.getHumanAbilityTime() - 1);
             strength--;
@@ -31,34 +30,26 @@ public class Czlowiek extends Animal{
 
         switch (move) {
             case 0 -> {
-                //TODO
                 if(current_world.isPositionValid(temp_x,temp_y-1)) {
                     temp_y--;
-                    current_world.moveOrganism(this, temp_x, temp_y);
                 }
                 else return;
             }
             case 1 -> {
-                //TODO
                 if(current_world.isPositionValid(temp_x,temp_y+1)) {
                     temp_y++;
-                    current_world.moveOrganism(this, temp_x, temp_y);
                 }
                 else return;
             }
             case 2 ->{
-                //TODO
                 if(current_world.isPositionValid(temp_x-1,temp_y)) {
                     temp_x--;
-                    current_world.moveOrganism(this, temp_x, temp_y);
                 }
                 else return;
             }
             case 3 ->{
-                //TODO
                 if(current_world.isPositionValid(temp_x+1,temp_y)) {
                     temp_x++;
-                    current_world.moveOrganism(this, temp_x, temp_y);
                 }
                 else return;
             }
@@ -69,11 +60,18 @@ public class Czlowiek extends Animal{
                     current_world.setHumanAbilityTime(5);
                 }
                 else {
-                    //std::cout<<"Przed aktywowaniem specjalnosci musisz odczekac jescze: "<<this->currentWorld->getCooldown()<<std::endl;
                     System.out.println("Przed aktywowaniem specjalnosci musisz odczekac jescze: "+current_world.getCooldown());
                     return;
                 }
             }
+        }
+
+
+        if(current_world.getOrganism(temp_x,temp_y) != null) {
+            current_world.getOrganism(temp_x,temp_y).collision(this);
+        }
+        else {
+            current_world.moveOrganism(this, temp_x, temp_y);
         }
     }
 

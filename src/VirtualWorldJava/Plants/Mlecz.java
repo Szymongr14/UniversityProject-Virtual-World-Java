@@ -19,9 +19,4 @@ public class Mlecz extends Plant{
         for(int i = 0; i < 3; i++)
             super.action();
     }
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Mlecz collision");
-    }
 }

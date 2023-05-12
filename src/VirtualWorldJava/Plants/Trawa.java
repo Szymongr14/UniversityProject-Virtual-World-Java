@@ -13,10 +13,4 @@ public class Trawa extends Plant{
         this.name = "Trawa";
         this.sign = "T";
     }
-
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Trawa collision");
-    }
 }

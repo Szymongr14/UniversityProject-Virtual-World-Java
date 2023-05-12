@@ -15,17 +15,7 @@ public class Owca extends Animal{
     }
 
     @Override
-    public void action(){
-        System.out.println("Owca action");
-    }
-
-    @Override
     public Organism clone() {
-        return null;
-    }
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Owca collision");
+        return new Owca(this.current_world, this.getX(), this.getY(), 1);
     }
 }

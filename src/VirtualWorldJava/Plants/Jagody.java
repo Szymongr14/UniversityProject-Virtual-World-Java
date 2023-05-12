@@ -12,10 +12,4 @@ public class Jagody extends Plant{
         this.name = "Jagody";
         this.sign = "J";
     }
-
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Jagody collision");
-    }
 }

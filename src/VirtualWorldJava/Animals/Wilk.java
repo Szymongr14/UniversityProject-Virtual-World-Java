@@ -14,17 +14,7 @@ public class Wilk extends Animal{
     }
 
     @Override
-    public void action(){
-        System.out.println("Wilk action");
-    }
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Wilk collision");
-    }
-
-    @Override
     public Organism clone() {
-        return null;
+        return new Wilk(this.current_world, this.getX(), this.getY(), 1);
     }
 }

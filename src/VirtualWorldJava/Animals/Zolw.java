@@ -15,16 +15,14 @@ public class Zolw  extends Animal{
 
     @Override
     public void action(){
-        System.out.println("Zolw action");
-    }
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Zolw collision");
+        int chance_to_move = (int) Math.floor(Math.random() *(4) +0);
+        if(chance_to_move == 0){
+            super.action();
+        }
     }
 
     @Override
     public Organism clone() {
-        return null;
+        return new Zolw(this.current_world, this.getX(), this.getY(), 1);
     }
 }

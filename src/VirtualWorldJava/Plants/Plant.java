@@ -1,4 +1,5 @@
 package VirtualWorldJava.Plants;
+import VirtualWorldJava.Animals.Czlowiek;
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
 import java.util.Random;
@@ -11,19 +12,18 @@ public abstract class Plant extends Organism{
 
     @Override
     public void action() {
-        Random rand = new Random(System.currentTimeMillis());
-        int chance = rand.nextInt(100);
-        if(chance<10){
+        int chance = (int) Math.floor(Math.random() *(100 - 1 + 1) + 1);
+        if(chance<20){
             int new_x = this.x;
             int new_y = this.y;
-            int direction = rand.nextInt(4);
+            int direction = (int) Math.floor(Math.random() *(4) + 0);
             switch (direction) {
                 case 0 -> new_x--;
                 case 1 -> new_x++;
                 case 2 -> new_y--;
                 case 3 -> new_y++;
             }
-            if(current_world.isPositionValid(new_x,new_y)){
+            if(current_world.isPositionEmptyAndValid(new_x,new_y)){
                 String message = "Zasiano rosline: "+this.name;
                 current_world.getAppGUI().returnInformationContainer().addMessage(message);
                 if(this instanceof Trawa){
@@ -47,5 +47,21 @@ public abstract class Plant extends Organism{
 
     @Override
     public void collision(Organism attacker) {
+        if(attacker.getStrength() < this.getStrength()) {
+            String message = "Roslina: "+this.name+" zabila: "+attacker.getName();
+            current_world.getAppGUI().returnInformationContainer().addMessage(message);
+            attacker.setAlive(false);
+            current_world.removeOrganism(attacker);
+            if(attacker instanceof Czlowiek){
+               current_world.setGame_status(false);
+            }
+        }
+    else {
+            String message = "Roslina: "+this.name+" zostala zjedzone przez: "+attacker.getName();
+            current_world.getAppGUI().returnInformationContainer().addMessage(message);
+            current_world.moveOrganism(attacker, this.getX(), this.getY());
+            this.setAlive(false);
+            //current_world.removeOrganism(this);
+        }
     }
 }

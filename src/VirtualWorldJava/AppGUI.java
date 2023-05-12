@@ -69,6 +69,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newGame) {
+            //TODO: set bounds for world size in while loop
             int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata", "20"));
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata", "20"));
             System.out.println("sizeX: "+sizeX+" sizeY:"+ sizeY);
@@ -212,16 +213,15 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     public class InformationContainer extends JPanel{
-        private final String header = "           KOMUNIKATY O ZDARZENIACH: \n\n";
-        private String text =header;
-//        private final String header = "Strzalki - kierowanie Czlowiekiem\n" +
-//                "r - aktywacja umiejetnosci\n";
-        private JTextArea textArea;
+        private final String header = "     Strzalki - kierowanie czlowiekiem\n           r- aktywacja specjalnosci     \n\n\n     KOMUNIKATY O ZDARZENIACH: \n\n";
+        private String text = header;
+        private final JTextArea textArea;
         public InformationContainer(){
             super();
-            this.setBounds(700+ODSTEP, ODSTEP, 250, mainContainer.getHeight()-ODSTEP*2);
+            this.setBounds(700+ODSTEP, ODSTEP, 260, mainContainer.getHeight()-ODSTEP*2);
             textArea = new JTextArea(text);
             textArea.setEditable(false);
+            textArea.setFont(new Font("Arial", Font.BOLD, 13));
             setLayout(new CardLayout());
 
             textArea.setLineWrap(true);
@@ -241,22 +241,22 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         }
 
         public void addMessage(String message){
-            text += message+ "\n";
+            text += message+ "\n\n";
             textArea.setText(text);
         }
     }
 
     public class LegendContainer extends JPanel {
         private JLabel[] labels;
-        private final int species_number = 11;
 
         LegendContainer() {
             super();
             setBackground(Color.ORANGE);
             this.setBounds(ODSTEP, boardContainer.getHeight() + ODSTEP * 2, boardContainer.getWidth(), 120);
             this.setLayout(new GridLayout(2, 6, 10, 10));
+            int species_number = 11;
             labels = new JLabel[species_number];
-            Font font = new Font("Arial", Font.PLAIN, 16);
+            Font font = new Font("Arial", Font.BOLD, 16);
             Color fontColor = Color.BLACK;
 
             labels[0] = new JLabel("Barszcz");
@@ -293,7 +293,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             labels[10].setBackground(new Color(95,125,39));
 
 
-            for(int i=0;i<species_number;i++){
+            for(int i = 0; i< species_number; i++){
                 labels[i].setOpaque(true);
                 labels[i].setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 labels[i].setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -311,15 +311,31 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     public void keyPressed(KeyEvent e) {
         informationContainer.clearMessages();
         int keyCode = e.getKeyCode();
-        if(current_world.isGame_status()){
+        if(current_world.isGame_status() && !current_world.isWait_for_turn()){
             switch (keyCode) {
-                case KeyEvent.VK_UP -> current_world.makeTurn(0);
-                case KeyEvent.VK_DOWN -> current_world.makeTurn(1);
-                case KeyEvent.VK_LEFT -> current_world.makeTurn(2);
-                case KeyEvent.VK_RIGHT -> current_world.makeTurn(3);
-                case KeyEvent.VK_R -> current_world.makeTurn(4);
+                case KeyEvent.VK_UP -> {
+                    current_world.makeTurn(0);
+                    current_world.setWait_for_turn(true);
+                }
+                case KeyEvent.VK_DOWN -> {
+                    current_world.makeTurn(1);
+                    current_world.setWait_for_turn(true);
+                }
+                case KeyEvent.VK_LEFT -> {
+                    current_world.makeTurn(2);
+                    current_world.setWait_for_turn(true);
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    current_world.makeTurn(3);
+                    current_world.setWait_for_turn(true);
+                }
+                case KeyEvent.VK_R -> {
+                    current_world.makeTurn(4);
+                    current_world.setWait_for_turn(true);
+                }
             }
         }
+        current_world.setWait_for_turn(false);
         informationContainer.refreshMessages();
         boardContainer.refreshBoard();
         SwingUtilities.updateComponentTreeUI(jFrame);
@@ -345,6 +361,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     void CreateLayout(){
+        mainContainer.removeAll();
         boardContainer = new BoardContainer(current_world.getWidth(), current_world.getHeight());
         mainContainer.add(boardContainer);
         informationContainer = new InformationContainer();

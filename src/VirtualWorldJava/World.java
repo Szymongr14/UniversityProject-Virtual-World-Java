@@ -12,10 +12,14 @@ public class World {
     private Vector<Vector<AppGUI.boardField>> Board;
     private AppGUI appGUI;
     private Organism human;
+    private boolean wait_for_turn_execution = false;
+
+
+    public boolean isWait_for_turn() {return wait_for_turn_execution;}
+    public void setWait_for_turn(boolean wait_for_turn_execution) {this.wait_for_turn_execution = wait_for_turn_execution;}
     public AppGUI getAppGUI() {
         return appGUI;
     }
-
     public void setAppGUI(AppGUI appGUI) {
         this.appGUI = appGUI;
     }
@@ -84,13 +88,6 @@ public class World {
             Organisms.add(row);
         }
 
-        for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
-                if(Organisms.get(i).get(j)==null) System.out.println("null");
-                else System.out.println(Organisms.get(i).get(j));
-            }
-        }
-
         //create and fill Board vector
         Board = new Vector<Vector<AppGUI.boardField>>(height);
         for (int i = 0; i < height; i++) {
@@ -140,8 +137,6 @@ public class World {
 
     public void makeTurn(int move){
         Vector <Organism> active_organisms = new Vector<Organism>();
-        //Vector <Organism> dead_organisms = new Vector<Organism>();
-
 
         //updating active organisms
         for(int i=0;i<height;i++){
@@ -192,6 +187,10 @@ public class World {
         return x>=0 && x<width && y>=0 && y<height;
     }
 
+    public boolean isPositionEmptyAndValid(int x, int y){
+        return isPositionValid(x,y) && Organisms.get(y).get(x)==null;
+    }
+
     public void moveOrganism(Organism organism, int x, int y) {
         Organisms.get(organism.getY()).set(organism.getX(),null);
         Organisms.get(y).set(x,organism);
@@ -205,8 +204,24 @@ public class World {
         organism.setY(y);
     }
 
-    Organism getOrganism(int x, int y) {
+    public Organism getOrganism(int x, int y) {
         return Organisms.get(y).get(x);
+    }
+
+    public void removeOrganism(Organism organism) {
+        Organisms.get(organism.getY()).set(organism.getX(),null);
+    }
+
+    public int returnEmptyPositionAround(int x, int y){
+        if(isPositionEmptyAndValid(x+1,y) && this.getOrganism(x+1,y) == null)
+            return 1;
+        if(isPositionEmptyAndValid(x-1,y) && this.getOrganism(x-1,y) == null)
+            return 2;
+        if(isPositionEmptyAndValid(x,y+1) && this.getOrganism(x,y+1)== null)
+            return 3;
+        if(isPositionEmptyAndValid(x,y-1) && this.getOrganism(x,y-1) == null)
+            return 4;
+        return 5;
     }
 
 

@@ -10,8 +10,4 @@ public class Barszcz extends Plant{
         this.name = "Barszcz";
         this.sign = "B";
     }
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Barszcz collision");
-    }
 }
