@@ -1,5 +1,6 @@
 package VirtualWorldJava.Animals;
 
+import VirtualWorldJava.AppGUI;
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
 
@@ -15,7 +16,8 @@ public class Antylopa extends Animal{
 
     @Override
     public void action(){
-        System.out.println("Antylopa action");
+        current_world.getAppGUI().returnInformationContainer().addMessage("Antylopa action");
+        //System.out.println("Antylopa action");
     }
 
     @Override

@@ -13,13 +13,9 @@ public class Jagody extends Plant{
         this.sign = "J";
     }
 
-    @Override
-    public void action(){
-        System.out.println("Barszcz action");
-    }
 
     @Override
     public void collision(Organism attacker) {
-        System.out.println("Barszcz collision");
+        System.out.println("Jagody collision");
     }
 }

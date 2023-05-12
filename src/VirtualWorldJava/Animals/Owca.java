@@ -6,6 +6,7 @@ import VirtualWorldJava.World;
 import java.awt.*;
 
 public class Owca extends Animal{
+
     public Owca(World current_world, int x, int y, int age) {
         super(current_world,4,4,x, y,age);
         this.color = Color.LIGHT_GRAY;

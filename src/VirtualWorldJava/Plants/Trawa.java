@@ -14,13 +14,9 @@ public class Trawa extends Plant{
         this.sign = "T";
     }
 
-    @Override
-    public void action(){
-        System.out.println("Barszcz action");
-    }
 
     @Override
     public void collision(Organism attacker) {
-        System.out.println("Barszcz collision");
+        System.out.println("Trawa collision");
     }
 }

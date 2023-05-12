@@ -4,6 +4,7 @@ import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Mlecz extends Plant{
     public Mlecz(World current_world, int x, int y) {
@@ -15,11 +16,12 @@ public class Mlecz extends Plant{
 
     @Override
     public void action(){
-        System.out.println("Barszcz action");
+        for(int i = 0; i < 3; i++)
+            super.action();
     }
 
     @Override
     public void collision(Organism attacker) {
-        System.out.println("Barszcz collision");
+        System.out.println("Mlecz collision");
     }
 }

@@ -14,7 +14,8 @@ public class Lis extends Animal{
 
     @Override
     public void action(){
-        System.out.println("Lis action");
+        current_world.getAppGUI().returnInformationContainer().addMessage("Lis action");
+        //System.out.println("Lis action");
     }
 
     @Override

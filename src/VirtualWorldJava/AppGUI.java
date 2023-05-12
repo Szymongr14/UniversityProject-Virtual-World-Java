@@ -32,7 +32,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         jFrame = new JFrame("Virtual World Java - Szymon Groszkowski 193141");
         //super("Virtual VirtualWorldJava.World Game");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(800, 800);
+        jFrame.setSize(1000, 900);
         jFrame.setResizable(false);
 
         //menu
@@ -72,7 +72,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata", "20"));
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata", "20"));
             System.out.println("sizeX: "+sizeX+" sizeY:"+ sizeY);
-            current_world = new World(sizeY, sizeX);
+            current_world = new World(sizeY, sizeX,this);
             this.CreateLayout();
         }
 
@@ -101,7 +101,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             this.x = x;
             this.y = y;
             frame = new JFrame("Dodaj organizm");
-            frame.setBounds(mainContainer.getX()/2, mainContainer.getY()/2, 270, 250);
+            frame.setBounds(100,200, 270, 250);
             listaOrganizmow = new String[]{"Barszcz Sosnowskiego", "Guarana", "Mlecz", "Trawa",
                     "Wilcze jagody", "Antylopa", "Lis", "Owca", "Wilk", "Zolw"
             };
@@ -192,20 +192,124 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             }
             this.setLayout(new GridLayout(sizeY, sizeX));
         }
+
+        public void refreshBoard(){
+            for(int i=0; i<sizeY; i++){
+                for(int j=0; j<sizeX; j++){
+                    if(current_world.getOrganisms().get(i).get(j)!=null){
+                        current_world.getBoard().get(i).get(j).setText(current_world.getOrganisms().get(i).get(j).getSign());
+                        current_world.getBoard().get(i).get(j).setBackground(current_world.getOrganisms().get(i).get(j).getColor());
+                        current_world.getBoard().get(i).get(j).setVerticalAlignment(SwingConstants.CENTER);
+                        current_world.getBoard().get(i).get(j).setHorizontalAlignment(SwingConstants.CENTER);
+                    }
+                    else{
+                        current_world.getBoard().get(i).get(j).setText("");
+                        current_world.getBoard().get(i).get(j).setBackground(Color.WHITE);
+                    }
+                }
+            }
+        }
     }
 
-    public  class InformationContainer extends JPanel{
+    public class InformationContainer extends JPanel{
+        private final String header = "           KOMUNIKATY O ZDARZENIACH: \n\n";
+        private String text =header;
+//        private final String header = "Strzalki - kierowanie Czlowiekiem\n" +
+//                "r - aktywacja umiejetnosci\n";
+        private JTextArea textArea;
+        public InformationContainer(){
+            super();
+            this.setBounds(700+ODSTEP, ODSTEP, 250, mainContainer.getHeight()-ODSTEP*2);
+            textArea = new JTextArea(text);
+            textArea.setEditable(false);
+            setLayout(new CardLayout());
 
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+            textArea.setMargin(new Insets(5, 5, 5, 5));
+            JScrollPane sp = new JScrollPane(textArea);
+            add(sp);
+        }
+
+        public void refreshMessages() {
+            text = header+ "TURA ["+current_world.getTurn()+"] \n" + text;
+            textArea.setText(text);
+        }
+
+        public void clearMessages() {
+            text = "";
+        }
+
+        public void addMessage(String message){
+            text += message+ "\n";
+            textArea.setText(text);
+        }
     }
 
-    public  class LegendContainer extends JPanel{
+    public class LegendContainer extends JPanel {
+        private JLabel[] labels;
+        private final int species_number = 11;
 
+        LegendContainer() {
+            super();
+            setBackground(Color.ORANGE);
+            this.setBounds(ODSTEP, boardContainer.getHeight() + ODSTEP * 2, boardContainer.getWidth(), 120);
+            this.setLayout(new GridLayout(2, 6, 10, 10));
+            labels = new JLabel[species_number];
+            Font font = new Font("Arial", Font.PLAIN, 16);
+            Color fontColor = Color.BLACK;
+
+            labels[0] = new JLabel("Barszcz");
+            labels[0].setBackground(new Color(118,250,197));
+
+            labels[1] = new JLabel("Guarana");
+            labels[1].setBackground(new Color(255,204,255));
+
+            labels[2] = new JLabel("Mlecz");
+            labels[2].setBackground(new Color(247,247,150));
+
+            labels[3] = new JLabel("Trawa");
+            labels[3].setBackground( new Color(91,253,66));
+
+            labels[4] = new JLabel("Jagody");
+            labels[4].setBackground(new Color(140,30,213));
+
+            labels[5] = new JLabel("Antylopa");
+            labels[5].setBackground(Color.YELLOW);
+
+            labels[6] = new JLabel("Czlowiek");
+            labels[6].setBackground(Color.RED);
+
+            labels[7] = new JLabel("Lis");
+            labels[7].setBackground(Color.ORANGE);
+
+            labels[8] = new JLabel("Owca");
+            labels[8].setBackground(Color.LIGHT_GRAY);
+
+            labels[9] = new JLabel("Wilk");
+            labels[9].setBackground(Color.GRAY);
+
+            labels[10] = new JLabel("Zolw");
+            labels[10].setBackground(new Color(95,125,39));
+
+
+            for(int i=0;i<species_number;i++){
+                labels[i].setOpaque(true);
+                labels[i].setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                labels[i].setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                labels[i].setForeground(fontColor);
+                labels[i].setFont(font);
+                labels[i].setHorizontalAlignment(SwingConstants.CENTER);
+                this.add(labels[i]);
+            }
+        }
     }
 
 
 
     @Override
     public void keyPressed(KeyEvent e) {
+        informationContainer.clearMessages();
         int keyCode = e.getKeyCode();
         if(current_world.isGame_status()){
             switch (keyCode) {
@@ -213,9 +317,12 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                 case KeyEvent.VK_DOWN -> current_world.makeTurn(1);
                 case KeyEvent.VK_LEFT -> current_world.makeTurn(2);
                 case KeyEvent.VK_RIGHT -> current_world.makeTurn(3);
-                case KeyEvent.VK_SPACE -> current_world.makeTurn(4);
+                case KeyEvent.VK_R -> current_world.makeTurn(4);
             }
         }
+        informationContainer.refreshMessages();
+        boardContainer.refreshBoard();
+        SwingUtilities.updateComponentTreeUI(jFrame);
     }
 
     @Override
@@ -233,9 +340,16 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     @Override
     public void mouseExited(MouseEvent e) {}
 
+    public  InformationContainer returnInformationContainer(){
+        return informationContainer;
+    }
+
     void CreateLayout(){
         boardContainer = new BoardContainer(current_world.getWidth(), current_world.getHeight());
         mainContainer.add(boardContainer);
+        informationContainer = new InformationContainer();
+        mainContainer.add(new LegendContainer());
+        mainContainer.add(informationContainer);
         SwingUtilities.updateComponentTreeUI(jFrame);
         jFrame.requestFocusInWindow();
     }

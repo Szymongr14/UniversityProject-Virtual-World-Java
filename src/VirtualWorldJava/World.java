@@ -1,14 +1,12 @@
 package VirtualWorldJava;
 import VirtualWorldJava.Animals.*;
 import VirtualWorldJava.Plants.*;
-
-import java.awt.*;
+import java.util.Comparator;
 import java.util.Random;
-
 import java.util.Vector;
 
 public class World {
-    private int turn=1,height=0,width=0,cooldown=0,humanAbilityTime=0;
+    private int turn=0,height=0,width=0,cooldown=0,humanAbilityTime=0;
     private boolean game_status = true;
     private Vector<Vector<Organism>> Organisms;
     private Vector<Vector<AppGUI.boardField>> Board;
@@ -21,75 +19,60 @@ public class World {
     public void setAppGUI(AppGUI appGUI) {
         this.appGUI = appGUI;
     }
-
     public int getTurn() {
         return turn;
     }
-
     public void setTurn(int turn) {
         this.turn = turn;
     }
-
     public int getHeight() {
         return height;
     }
-
     public void setHeight(int height) {
         this.height = height;
     }
-
     public int getWidth() {
         return width;
     }
-
     public void setWidth(int width) {
         this.width = width;
     }
-
     public int getCooldown() {
         return cooldown;
     }
-
     public void setCooldown(int cooldown) {
         this.cooldown = cooldown;
     }
-
     public int getHumanAbilityTime() {
         return humanAbilityTime;
     }
-
     public void setHumanAbilityTime(int humanAbilityTime) {
         this.humanAbilityTime = humanAbilityTime;
     }
-
     public boolean isGame_status() {
         return game_status;
     }
-
     public void setGame_status(boolean game_status) {
         this.game_status = game_status;
     }
-
     public Vector<Vector<Organism>> getOrganisms() {
         return Organisms;
     }
-
     public void setOrganisms(Vector<Vector<Organism>> organisms) {
         Organisms = organisms;
     }
-
     public Vector<Vector<AppGUI.boardField>> getBoard() {
         return Board;
     }
-
     public void setBoard(Vector<Vector<AppGUI.boardField>> board) {
         Board = board;
     }
 
 
-    public World(int height, int width) {
+    public World(int height, int width, AppGUI appGUI) {
         this.height = height;
         this.width = width;
+        this.appGUI = appGUI;
 
         //create and fill Organisms vector
         Organisms = new Vector<Vector<Organism>>(height);
@@ -134,7 +117,6 @@ public class World {
 
         //placing first plants
         placeOnRandomPosition(new Trawa(this, -1, -1));
-        placeOnRandomPosition(new Trawa(this, -1, -1));
         placeOnRandomPosition(new Mlecz(this, -1, -1));
         placeOnRandomPosition(new Guarana(this, -1, -1));
         placeOnRandomPosition(new Barszcz(this, -1, -1));
@@ -149,64 +131,85 @@ public class World {
             x=rand.nextInt(width);
             y=rand.nextInt(height);
         }while(Organisms.get(y).get(x)!=null);
-        addOrganism(organism,x,y);
-
-        //Board.get(y).set(x,new AppGUI.boardField(organism));
-    }
-
-    public void makeTurn(int move){
-//        Organism [][]active_organisms = new Organism[height][width];
-//        Organism [][]dead_organism = new Organism[height][width];
-        Vector <Organism> active_organisms = new Vector<Organism>();
-        Vector <Organism> dead_organisms = new Vector<Organism>();
-
-
-        //updating acctive organisms
-        for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
-                active_organisms.add(Organisms.get(i).get(j));
-            }
-        }
-
-
-        switch(move){
-            case 0:
-                //TODO
-                System.out.println("makeTurn0");
-                break;
-            case 1:
-                //TODO
-                System.out.println("makeTurn1");
-                break;
-            case 2:
-                //TODO
-                System.out.println("makeTurn2");
-                break;
-            case 3:
-                //TODO
-                System.out.println("makeTurn3");
-                break;
-            case 4:
-                //TODO
-                System.out.println("makeTurn4");
-                break;
-        }
-
-
-    }
-
-    void addOrganism(Organism organism, int x, int y){
+        //addOrganism(organism,x,y);
         Organisms.get(y).set(x,organism);
         Board.get(y).set(x,organism.draw());
         organism.setX(x);
         organism.setY(y);
     }
 
-    void MainLoopOfTheGame(){
-        while(this.game_status){
+    public void makeTurn(int move){
+        Vector <Organism> active_organisms = new Vector<Organism>();
+        //Vector <Organism> dead_organisms = new Vector<Organism>();
 
+
+        //updating active organisms
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                if(Organisms.get(i).get(j)!=null) {
+                    active_organisms.add(Organisms.get(i).get(j));
+                }
+            }
         }
+
+        //updating organisms' age
+        for(Organism organism : active_organisms) {
+            organism.setAge(organism.getAge() + 1);
+        }
+
+        // Sort organisms by initiative
+        active_organisms.sort(new Comparator<Organism>() {
+            @Override
+            public int compare(Organism o1, Organism o2) {
+                if (o2.getInitiative() != o1.getInitiative()) {
+                    return o2.getInitiative() - o1.getInitiative();
+                } else {
+                    return o2.getAge() - o1.getAge();
+                }
+            }
+        });
+
+        // Making a turns
+        for(Organism organism : active_organisms) {
+            if(organism.isAlive())
+                if(organism instanceof Czlowiek)
+                    ((Czlowiek) organism).action(move);
+                else
+                    organism.action();
+        }
+
+        this.turn++;
     }
+
+    public void addOrganism(Organism organism, int x, int y){
+        Organisms.get(y).set(x,organism);
+        //Board.get(y).set(x,organism.draw());
+        organism.setX(x);
+        organism.setY(y);
+    }
+
+    public boolean isPositionValid(int x, int y){
+        return x>=0 && x<width && y>=0 && y<height;
+    }
+
+    public void moveOrganism(Organism organism, int x, int y) {
+        Organisms.get(organism.getY()).set(organism.getX(),null);
+        Organisms.get(y).set(x,organism);
+        organism.setX(x);
+        organism.setY(y);
+    }
+
+    public void escapeToPosition(Organism organism, int x, int y) {
+        Organisms.get(y).set(x,organism);
+        organism.setX(x);
+        organism.setY(y);
+    }
+
+    Organism getOrganism(int x, int y) {
+        return Organisms.get(y).get(x);
+    }
+
+
 
 
 
