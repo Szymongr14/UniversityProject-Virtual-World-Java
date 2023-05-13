@@ -33,10 +33,10 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
 
         jFrame = new JFrame("Virtual World Java - Szymon Groszkowski 193141");
-        //super("Virtual VirtualWorldJava.World Game");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setSize(1000, 900);
         jFrame.setResizable(false);
+        jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("nature_icon.png")));
 
         //menu
         JMenuBar menuBar = new JMenuBar();
@@ -58,7 +58,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
         //main container
         mainContainer = new JPanel();
-        mainContainer.setBackground(Color.orange);
+        mainContainer.setBackground(new Color(46, 143, 47));
         mainContainer.setLayout(null);
         jFrame.setLayout(new CardLayout());
 
@@ -74,11 +74,11 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         if (e.getSource() == newGame) {
             int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata [min 4]", "20"));
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata [min 4]", "20"));
-            do{
+            while (sizeX < 4 && sizeY < 4){
                 JOptionPane.showMessageDialog(jFrame, "Rozmiar swiata musi byc wiekszy niz 4x4");
                 sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata [min 4]", "20"));
                 sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata [min 4]", "20"));
-            }while (sizeX < 4 && sizeY < 4);
+            }
             current_world = new World(sizeY, sizeX,this);
             this.CreateLayout();
         }
@@ -264,6 +264,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         public InformationContainer(){
             super();
             this.setBounds(700+ODSTEP, ODSTEP, 260, mainContainer.getHeight()-ODSTEP*2);
+            this.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
             textArea = new JTextArea(text);
             textArea.setEditable(false);
             textArea.setFont(new Font("Arial", Font.BOLD, 13));
@@ -296,12 +297,12 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
         LegendContainer() {
             super();
-            setBackground(Color.ORANGE);
+            setBackground(new Color(46, 143, 47));
             this.setBounds(ODSTEP, boardContainer.getHeight() + ODSTEP * 2, boardContainer.getWidth(), 120);
             this.setLayout(new GridLayout(2, 6, 10, 10));
             int species_number = 11;
             labels = new JLabel[species_number];
-            Font font = new Font("Arial", Font.BOLD, 16);
+            Font font = new Font("Arial", Font.BOLD, 14);
             Color fontColor = Color.BLACK;
 
             labels[0] = new JLabel("Barszcz");
@@ -379,9 +380,9 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                     current_world.setWait_for_turn(true);
                 }
             }
+            informationContainer.refreshMessages();
         }
         current_world.setWait_for_turn(false);
-        informationContainer.refreshMessages();
         boardContainer.refreshBoard();
     }
 

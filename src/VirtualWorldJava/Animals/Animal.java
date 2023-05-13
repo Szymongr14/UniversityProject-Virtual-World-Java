@@ -63,6 +63,8 @@ public abstract class Animal extends Organism {
             current_world.removeOrganism(attacker);
             if(attacker instanceof Czlowiek){
                 current_world.setGame_status(false);
+                message = "KONIEC GRY! Czlowiek nie zyje!";
+                current_world.getAppGUI().returnInformationContainer().addMessage(message);
             }
         }
         else {
@@ -72,6 +74,8 @@ public abstract class Animal extends Organism {
             this.setAlive(false);
             if(this instanceof Czlowiek){
                 current_world.setGame_status(false);
+                message = "KONIEC GRY! Czlowiek nie zyje!";
+                current_world.getAppGUI().returnInformationContainer().addMessage(message);
             }
         }
     }
