@@ -18,7 +18,8 @@ public class Czlowiek extends Animal{
             current_world.setCooldown(current_world.getCooldown() - 1);
         }
         if(current_world.getHumanAbilityTime() > 0){
-            System.out.println("Specjalna umiejetnosc czlowieka aktywna. Pozostalo: "+current_world.getHumanAbilityTime()+" tur");
+            String message = "Specjalna umiejetnosc czlowieka aktywna. Pozostalo: "+current_world.getHumanAbilityTime()+" tur";
+            current_world.getAppGUI().returnInformationContainer().addMessage(message);
             current_world.setHumanAbilityTime(current_world.getHumanAbilityTime() - 1);
             strength--;
         }
@@ -58,9 +59,11 @@ public class Czlowiek extends Animal{
                     current_world.setCooldown(10);
                     strength += 5;
                     current_world.setHumanAbilityTime(5);
+                    return;
                 }
                 else {
-                    System.out.println("Przed aktywowaniem specjalnosci musisz odczekac jescze: "+current_world.getCooldown());
+                    String message = "Przed aktywowaniem specjalnosci musisz odczekac jescze: "+current_world.getCooldown();
+                    current_world.getAppGUI().returnInformationContainer().addMessage(message);
                     return;
                 }
             }
@@ -73,11 +76,6 @@ public class Czlowiek extends Animal{
         else {
             current_world.moveOrganism(this, temp_x, temp_y);
         }
-    }
-
-    @Override
-    public void collision(Organism attacker) {
-        System.out.println("Czlowiek collision");
     }
 
     @Override

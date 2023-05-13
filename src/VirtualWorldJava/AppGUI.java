@@ -1,5 +1,8 @@
 package VirtualWorldJava;
 
+import VirtualWorldJava.Animals.*;
+import VirtualWorldJava.Plants.*;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -69,10 +72,13 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newGame) {
-            //TODO: set bounds for world size in while loop
-            int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata", "20"));
-            int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata", "20"));
-            System.out.println("sizeX: "+sizeX+" sizeY:"+ sizeY);
+            int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata [min 4]", "20"));
+            int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata [min 4]", "20"));
+            do{
+                JOptionPane.showMessageDialog(jFrame, "Rozmiar swiata musi byc wiekszy niz 4x4");
+                sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj szerokosc swiata [min 4]", "20"));
+                sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Podaj wysokosc swiata [min 4]", "20"));
+            }while (sizeX < 4 && sizeY < 4);
             current_world = new World(sizeY, sizeX,this);
             this.CreateLayout();
         }
@@ -92,19 +98,14 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
 
     public class OrganismAddList extends JFrame implements ActionListener, ListSelectionListener {
-        private String[] listaOrganizmow;
-        private JList<String> jList;
-        private JFrame frame;
-        private int x;
-        private int y;
+        private final JList<String> jList;
+        private final JFrame frame;
 
         public OrganismAddList(int x, int y) {
-            this.x = x;
-            this.y = y;
             frame = new JFrame("Dodaj organizm");
             frame.setBounds(100,200, 270, 250);
-            listaOrganizmow = new String[]{"Barszcz Sosnowskiego", "Guarana", "Mlecz", "Trawa",
-                    "Wilcze jagody", "Antylopa", "Lis", "Owca", "Wilk", "Zolw"
+            String[] listaOrganizmow = new String[]{"Barszcz Sosnowskiego", "Guarana", "Mlecz", "Trawa",
+                    "Wilcze Jagody", "Antylopa", "Lis", "Owca", "Wilk", "Zolw"
             };
             DefaultListModel<String> listModel = new DefaultListModel<>();
             for (String item : listaOrganizmow) {
@@ -117,7 +118,51 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                 public void valueChanged(ListSelectionEvent e) {
                     if (!e.getValueIsAdjusting()) {
                         String selectedItem = jList.getSelectedValue();
-                        System.out.println("Selected item: " + selectedItem + ", x: " + x + ", y: " + y);
+                        String message="";
+                        switch (selectedItem) {
+                            case "Barszcz Sosnowskiego" -> {
+                                current_world.addOrganism(new Barszcz(current_world, x, y), x, y);
+                                message = "Dodano Barszcz na pozycje: " + x + ", " + y;
+                            }
+                            case "Guarana" -> {
+                                current_world.addOrganism(new Guarana(current_world, x, y), x, y);
+                                message = "Dodano Gurane na pozycje: " + x + ", " + y;
+                            }
+                            case "Mlecz" -> {
+                                current_world.addOrganism(new Mlecz(current_world, x, y), x, y);
+                                message = "Dodano Mlecz na pozycje: " + x + ", " + y;
+                            }
+                            case "Trawa" -> {
+                                current_world.addOrganism(new Trawa(current_world, x, y), x, y);
+                                message = "Dodano Trawe na pozycje: " + x + ", " + y;
+                            }
+                            case "Wilcze Jagody" -> {
+                                current_world.addOrganism(new Jagody(current_world, x, y), x, y);
+                                message = "Dodano Jagody na pozycje: " + x + ", " + y;
+                            }
+                            case "Antylopa" -> {
+                                current_world.addOrganism(new Antylopa(current_world, x, y, 1), x, y);
+                                message = "Dodano Antylope na pozycje: " + x + ", " + y;
+                            }
+                            case "Lis" -> {
+                                current_world.addOrganism(new Lis(current_world, x, y, 1), x, y);
+                                message = "Dodano Lisa na pozycje: " + x + ", " + y;
+                            }
+                            case "Owca" -> {
+                                current_world.addOrganism(new Owca(current_world, x, y, 1), x, y);
+                                message = "Dodano Owce na pozycje: " + x + ", " + y;
+                            }
+                            case "Wilk" -> {
+                                current_world.addOrganism(new Wilk(current_world, x, y, 1), x, y);
+                                message = "Dodano Wilka na pozycje: " + x + ", " + y;
+                            }
+                            case "Zolw" -> {
+                                current_world.addOrganism(new Zolw(current_world, x, y, 1), x, y);
+                                message = "Dodano Zolwia na pozycje: " + x + ", " + y;
+                            }
+                        }
+                        current_world.getAppGUI().informationContainer.addMessage(message);
+                        boardContainer.refreshBoard();
                         frame.setVisible(false);
                     }
                 }
@@ -133,6 +178,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         public void valueChanged(ListSelectionEvent e) {}
     }
 
+    public InformationContainer returnInformationContainer(){return informationContainer;}
 
 
     public static class boardField extends JLabel {
@@ -147,7 +193,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                 this.setText(organism.getSign());
                 this.setVerticalAlignment(SwingConstants.CENTER);
                 this.setHorizontalAlignment(SwingConstants.CENTER);
-
             }
             else {
                 this.setBackground(Color.WHITE);
@@ -158,7 +203,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         public Organism getOrganism() {
             return organism;
         }
-
         public void setOrganism(Organism organism) {
             this.organism = organism;
         }
@@ -185,7 +229,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                         public void mouseClicked(MouseEvent e) {
                             if(current_world.getOrganisms().get(row).get(col)==null){
                                 System.out.println("Puste pole zostało kliknięte!");
-                                OrganismAddList listaOrganizmow = new OrganismAddList(row,col);
+                                OrganismAddList listaOrganizmow = new OrganismAddList(col,row);
                             }
                         }
                     });
@@ -209,6 +253,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                     }
                 }
             }
+            SwingUtilities.updateComponentTreeUI(jFrame);
         }
     }
 
@@ -338,7 +383,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         current_world.setWait_for_turn(false);
         informationContainer.refreshMessages();
         boardContainer.refreshBoard();
-        SwingUtilities.updateComponentTreeUI(jFrame);
     }
 
     @Override
@@ -356,9 +400,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     @Override
     public void mouseExited(MouseEvent e) {}
 
-    public  InformationContainer returnInformationContainer(){
-        return informationContainer;
-    }
 
     void CreateLayout(){
         mainContainer.removeAll();

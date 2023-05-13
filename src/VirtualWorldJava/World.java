@@ -178,7 +178,6 @@ public class World {
 
     public void addOrganism(Organism organism, int x, int y){
         Organisms.get(y).set(x,organism);
-        //Board.get(y).set(x,organism.draw());
         organism.setX(x);
         organism.setY(y);
     }

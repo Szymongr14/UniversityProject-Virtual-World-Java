@@ -12,4 +12,11 @@ public class Guarana extends Plant{
         this.name = "Guarana";
         this.sign = "G";
     }
+
+    @Override
+    public void collision(Organism attacker){
+        attacker.setStrength(attacker.getStrength() + 3);
+        super.collision(attacker);
+    }
 }
+

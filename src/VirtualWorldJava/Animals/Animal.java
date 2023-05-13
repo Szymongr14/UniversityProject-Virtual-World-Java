@@ -4,6 +4,8 @@ package VirtualWorldJava.Animals;
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
 
+import java.util.Objects;
+
 public abstract class Animal extends Organism {
 
     public Animal(World current_world,int strength, int initiative,int x, int y, int age) {

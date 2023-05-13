@@ -13,7 +13,7 @@ public abstract class Plant extends Organism{
     @Override
     public void action() {
         int chance = (int) Math.floor(Math.random() *(100 - 1 + 1) + 1);
-        if(chance<20){
+        if(chance<10){
             int new_x = this.x;
             int new_y = this.y;
             int direction = (int) Math.floor(Math.random() *(4) + 0);
@@ -25,7 +25,7 @@ public abstract class Plant extends Organism{
             }
             if(current_world.isPositionEmptyAndValid(new_x,new_y)){
                 String message = "Zasiano rosline: "+this.name;
-                current_world.getAppGUI().returnInformationContainer().addMessage(message);
+                //current_world.getAppGUI().returnInformationContainer().addMessage(message);
                 if(this instanceof Trawa){
                     current_world.addOrganism(new Trawa(current_world,new_x,new_y),new_x,new_y);
                 }
@@ -61,7 +61,6 @@ public abstract class Plant extends Organism{
             current_world.getAppGUI().returnInformationContainer().addMessage(message);
             current_world.moveOrganism(attacker, this.getX(), this.getY());
             this.setAlive(false);
-            //current_world.removeOrganism(this);
         }
     }
 }
