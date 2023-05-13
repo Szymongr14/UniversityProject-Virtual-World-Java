@@ -14,6 +14,14 @@ public class Antylopa extends Animal{
         this.sign = "A";
     }
 
+
+    public Antylopa(World current_world, int initiative, int strength, int positionX, int positionY, int age){
+        super(current_world,strength,initiative,positionX,positionY,age);
+        this.color = Color.YELLOW;
+        this.name = "Antylopa";
+        this.sign = "A";
+    }
+
     @Override
     public void action(){
         int temp_x = this.getX();

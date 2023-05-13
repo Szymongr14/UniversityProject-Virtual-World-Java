@@ -1,0 +1,54 @@
+20
+20
+30
+0
+0
+Jagody 99 0 3 0 27
+Jagody 99 0 4 0 3
+Owca 4 4 1 1 34
+Jagody 99 0 3 1 31
+Lis 3 7 19 1 37
+Lis 3 7 13 2 37
+Owca 4 4 0 3 34
+Antylopa 4 4 6 3 37
+Wilk 9 5 15 5 39
+Czlowiek 5 4 19 6 50
+Mlecz 0 0 10 7 10
+Mlecz 0 0 12 7 15
+Mlecz 0 0 13 7 9
+Zolw 9 5 4 8 70
+Mlecz 0 0 10 8 13
+Mlecz 0 0 11 8 21
+Mlecz 0 0 12 8 18
+Mlecz 0 0 13 8 8
+Mlecz 0 0 14 8 7
+Mlecz 0 0 11 9 27
+Mlecz 0 0 12 9 31
+Mlecz 0 0 13 9 6
+Mlecz 0 0 14 9 5
+Barszcz 7 0 9 10 14
+Mlecz 0 0 11 10 5
+Mlecz 0 0 12 10 27
+Mlecz 0 0 13 10 24
+Mlecz 0 0 14 10 16
+Mlecz 0 0 15 10 8
+Mlecz 0 0 16 10 1
+Barszcz 7 0 8 11 5
+Barszcz 7 0 9 11 19
+Mlecz 0 0 12 11 8
+Mlecz 0 0 13 11 10
+Mlecz 0 0 14 11 12
+Barszcz 7 0 9 12 31
+Mlecz 0 0 11 12 3
+Mlecz 0 0 12 12 6
+Mlecz 0 0 13 12 4
+Mlecz 0 0 14 12 5
+Antylopa 4 4 19 12 31
+Mlecz 0 0 12 13 1
+Wilk 9 5 9 16 39
+Zolw 9 5 15 16 70
+Guarana 0 0 15 18 8
+Guarana 0 0 12 19 11
+Guarana 0 0 13 19 12
+Guarana 0 0 14 19 31
+Guarana 0 0 15 19 20

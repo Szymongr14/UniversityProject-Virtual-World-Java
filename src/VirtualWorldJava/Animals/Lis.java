@@ -12,6 +12,13 @@ public class Lis extends Animal{
         this.sign = "L";
     }
 
+    public Lis(World current_world, int initiative, int strength, int positionX, int positionY, int age){
+        super(current_world,strength,initiative,positionX,positionY,age);
+        this.color = Color.ORANGE;
+        this.name = "Lis";
+        this.sign = "L";
+    }
+
     @Override
     public void action(){
         int temp_x = this.getX();

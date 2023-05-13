@@ -13,6 +13,13 @@ public class Czlowiek extends Animal{
         this.sign = "C";
     }
 
+    public Czlowiek(World current_world, int initiative, int strength, int positionX, int positionY, int age){
+        super(current_world,strength,initiative,positionX,positionY,age);
+        this.color = Color.RED;
+        this.name = "Czlowiek";
+        this.sign = "C";
+    }
+
     public void action(int move){
         if(current_world.getCooldown() > 0){
             current_world.setCooldown(current_world.getCooldown() - 1);

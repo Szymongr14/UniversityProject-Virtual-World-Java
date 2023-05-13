@@ -8,6 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 public class AppGUI extends JFrame implements ActionListener, KeyListener, MouseListener {
     private JMenuItem newGame, load, save, exit;
@@ -21,6 +22,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
 
     private LegendContainer legendContainer;
+
 
     private BoardContainer boardContainer;
 
@@ -47,7 +49,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
         exit = new JMenuItem("Exit");
         menu.add(newGame);
         menu.add(load);
-        menu.add(save);
         menu.add(exit);
         newGame.addActionListener(this);
         load.addActionListener(this);
@@ -81,14 +82,32 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             }
             current_world = new World(sizeY, sizeX,this);
             this.CreateLayout();
+            menu.add(save,2);
+
         }
 
         else if (e.getSource() == load) {
-            System.out.println("load");
+            String file_name = JOptionPane.showInputDialog(null, "Enter a filename:", "Input", JOptionPane.PLAIN_MESSAGE);
+            if (file_name != null && !file_name.isEmpty()) {
+                try {
+                    current_world = new World(this, file_name);
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(jFrame, "Podany plik nie istnieje!");
+                    throw new RuntimeException(ex);
+                }
+                this.CreateLayout();
+                boardContainer.refreshBoard();
+                String message = "Loading world from file: " + file_name;
+                informationContainer.addMessage(message);
+            }
         }
 
         else if (e.getSource() == save) {
-            System.out.println("save");
+            String file_name = JOptionPane.showInputDialog(null, "Enter a filename:", "Input", JOptionPane.PLAIN_MESSAGE);
+            if (file_name != null && !file_name.isEmpty()) {
+                System.out.println("User entered: " + file_name);
+                current_world.saveWorld(file_name);
+            }
         }
 
         else if (e.getSource() == exit) {
@@ -179,6 +198,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     public InformationContainer returnInformationContainer(){return informationContainer;}
+    public BoardContainer getBoardContainer() {return boardContainer;}
 
 
     public static class boardField extends JLabel {

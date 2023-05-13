@@ -13,6 +13,13 @@ public class Zolw  extends Animal{
         this.sign = "Z";
     }
 
+    public Zolw(World current_world, int initiative, int strength, int positionX, int positionY, int age){
+        super(current_world,strength,initiative,positionX,positionY,age);
+        this.color = new Color(95,125,39);
+        this.name = "Zolw";
+        this.sign = "Z";
+    }
+
     @Override
     public void action(){
         int chance_to_move = (int) Math.floor(Math.random() *(4) +0);

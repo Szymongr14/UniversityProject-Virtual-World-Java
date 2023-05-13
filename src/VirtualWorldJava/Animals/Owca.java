@@ -14,6 +14,13 @@ public class Owca extends Animal{
         this.sign = "O";
     }
 
+    public Owca(World current_world, int initiative, int strength, int positionX, int positionY, int age){
+        super(current_world,strength,initiative,positionX,positionY,age);
+        this.color = Color.LIGHT_GRAY;
+        this.name = "Owca";
+        this.sign = "O";
+    }
+
     @Override
     public Organism clone() {
         return new Owca(this.current_world, this.getX(), this.getY(), 1);

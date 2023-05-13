@@ -1,0 +1,21 @@
+20
+20
+0
+0
+0
+Wilk 9 5 3 0 9
+Wilk 9 5 17 0 9
+Lis 3 7 16 1 7
+Trawa 0 0 13 2 1
+Mlecz 0 0 18 3 1
+Antylopa 4 4 2 4 7
+Owca 4 4 2 6 4
+Lis 3 7 2 9 7
+Owca 4 4 15 10 4
+Jagody 99 0 6 11 1
+Antylopa 4 4 3 15 7
+Guarana 0 0 8 15 1
+Czlowiek 5 4 16 16 20
+Zolw 9 5 0 17 40
+Zolw 9 5 4 17 40
+Barszcz 7 0 6 17 1
