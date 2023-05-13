@@ -1,10 +1,7 @@
 package VirtualWorldJava.Animals;
 
-
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
-
-import java.util.Objects;
 
 public abstract class Animal extends Organism {
 

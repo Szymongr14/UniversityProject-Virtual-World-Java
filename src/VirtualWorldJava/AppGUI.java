@@ -2,7 +2,6 @@ package VirtualWorldJava;
 
 import VirtualWorldJava.Animals.*;
 import VirtualWorldJava.Plants.*;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -11,26 +10,18 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 
 public class AppGUI extends JFrame implements ActionListener, KeyListener, MouseListener {
-    private JMenuItem newGame, load, save, exit;
-    private Toolkit toolkit;
-    private Dimension dimension;
-    private int ODSTEP;
-    private JList list;
-    private JMenu menu;
-    private JFrame jFrame;
-    private JPanel mainContainer;
-
-
-    private LegendContainer legendContainer;
-
-
+    private final JMenuItem newGame,load,save,exit;
+    private final int ODSTEP;
+    private final JMenu menu;
+    private final JFrame jFrame;
+    private final JPanel mainContainer;
     private BoardContainer boardContainer;
 
     private InformationContainer informationContainer;
     private static World current_world = null;
     AppGUI() {
-        toolkit = Toolkit.getDefaultToolkit();
-        dimension = toolkit.getScreenSize();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension dimension = toolkit.getScreenSize();
         ODSTEP = dimension.height / 100;
 
 
@@ -65,6 +56,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
         jFrame.addKeyListener(this);
         jFrame.add(mainContainer);
+        jFrame.setLocation(dimension.width/2-jFrame.getSize().width/2, dimension.height/2-jFrame.getSize().height/2); // set the location of the JFrame in the middle of the screen
         jFrame.setVisible(true);
     }
 
@@ -198,8 +190,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     public InformationContainer returnInformationContainer(){return informationContainer;}
-    public BoardContainer getBoardContainer() {return boardContainer;}
-
 
     public static class boardField extends JLabel {
         private Organism organism;
@@ -230,7 +220,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
 
     public  class BoardContainer extends JPanel{
-        private int sizeX, sizeY;
+        private final int sizeX, sizeY;
         public BoardContainer(int sizeX, int sizeY){
             super();
             this.setBounds(mainContainer.getX() + ODSTEP, mainContainer.getY() + ODSTEP, mainContainer.getHeight() * 5 / 6 - ODSTEP, mainContainer.getHeight() * 5 / 6 - ODSTEP);
@@ -249,7 +239,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
                         public void mouseClicked(MouseEvent e) {
                             if(current_world.getOrganisms().get(row).get(col)==null){
                                 System.out.println("Puste pole zostało kliknięte!");
-                                OrganismAddList listaOrganizmow = new OrganismAddList(col,row);
+                                new OrganismAddList(col,row);
                             }
                         }
                     });
@@ -313,7 +303,6 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     public class LegendContainer extends JPanel {
-        private JLabel[] labels;
 
         LegendContainer() {
             super();
@@ -321,7 +310,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
             this.setBounds(ODSTEP, boardContainer.getHeight() + ODSTEP * 2, boardContainer.getWidth(), 120);
             this.setLayout(new GridLayout(2, 6, 10, 10));
             int species_number = 11;
-            labels = new JLabel[species_number];
+            JLabel[] labels = new JLabel[species_number];
             Font font = new Font("Arial", Font.BOLD, 14);
             Color fontColor = Color.BLACK;
 

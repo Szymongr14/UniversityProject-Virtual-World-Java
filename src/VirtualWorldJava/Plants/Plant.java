@@ -1,8 +1,8 @@
 package VirtualWorldJava.Plants;
+
 import VirtualWorldJava.Animals.Czlowiek;
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
-import java.util.Random;
 
 public abstract class Plant extends Organism{
 

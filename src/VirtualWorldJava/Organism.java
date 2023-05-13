@@ -33,9 +33,6 @@ public abstract class Organism {
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
     public Color getColor() {return color;}
-    public void initParams() {}
-    public void move() {}
-    public void position() {}
     public void setStrength(int strength) {this.strength = strength;}
     public void setInitiative(int initiative) {this.initiative = initiative;}
     public void setAge(int age) {this.age = age;}

@@ -1,10 +1,7 @@
 package VirtualWorldJava.Plants;
 
-import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
-
 import java.awt.*;
-import java.util.Random;
 
 public class Mlecz extends Plant{
     public Mlecz(World current_world, int x, int y) {

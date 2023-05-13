@@ -2,7 +2,6 @@ package VirtualWorldJava.Animals;
 
 import VirtualWorldJava.World;
 import VirtualWorldJava.Organism;
-
 import java.awt.*;
 
 public class Wilk extends Animal{

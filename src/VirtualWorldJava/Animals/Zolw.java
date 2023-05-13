@@ -2,7 +2,6 @@ package VirtualWorldJava.Animals;
 
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
-
 import java.awt.*;
 
 public class Zolw  extends Animal{

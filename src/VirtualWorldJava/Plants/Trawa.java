@@ -1,8 +1,6 @@
 package VirtualWorldJava.Plants;
 
-import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
-
 import java.awt.*;
 
 public class Trawa extends Plant{

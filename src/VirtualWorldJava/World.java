@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class World {
-    private int turn=0,height=0,width=0,cooldown=0,humanAbilityTime=0;
+    private int turn=0,height,width,cooldown,humanAbilityTime=0;
     private boolean game_status = true;
     private Vector<Vector<Organism>> Organisms;
     private Vector<Vector<AppGUI.boardField>> Board;
@@ -276,7 +276,6 @@ public class World {
     }
 
 
-
     public boolean isWait_for_turn() {return wait_for_turn_execution;}
     public void setWait_for_turn(boolean wait_for_turn_execution) {this.wait_for_turn_execution = wait_for_turn_execution;}
     public AppGUI getAppGUI() {
@@ -288,21 +287,15 @@ public class World {
     public int getTurn() {
         return turn;
     }
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
+    public void setTurn(int turn) {this.turn = turn;}
     public int getHeight() {
         return height;
     }
-    public void setHeight(int height) {
-        this.height = height;
-    }
+    public void setHeight(int height) {this.height = height;}
     public int getWidth() {
         return width;
     }
-    public void setWidth(int width) {
-        this.width = width;
-    }
+    public void setWidth(int width) {this.width = width;}
     public int getCooldown() {
         return cooldown;
     }
@@ -314,11 +307,6 @@ public class World {
     public boolean isGame_status() {return game_status;}
     public void setGame_status(boolean game_status) {this.game_status = game_status;}
     public Vector<Vector<Organism>> getOrganisms() {return Organisms;}
-    public void setOrganisms(Vector<Vector<Organism>> organisms) {Organisms = organisms;}
     public Vector<Vector<AppGUI.boardField>> getBoard() {return Board;}
-    public void setBoard(Vector<Vector<AppGUI.boardField>> board) {Board = board;}
-
-
-
 
 }

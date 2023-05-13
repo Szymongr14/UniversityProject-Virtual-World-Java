@@ -1,6 +1,5 @@
 package VirtualWorldJava.Animals;
 
-import VirtualWorldJava.AppGUI;
 import VirtualWorldJava.Organism;
 import VirtualWorldJava.World;
 
