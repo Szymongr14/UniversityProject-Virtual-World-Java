@@ -27,7 +27,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
         jFrame = new JFrame("Virtual World Java - Szymon Groszkowski 193141");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(1000, 900);
+        jFrame.setSize(900, 850);
         jFrame.setResizable(false);
         jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("nature_icon.png")));
 
@@ -114,7 +114,7 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
 
         public OrganismAddList(int x, int y) {
             frame = new JFrame("Dodaj organizm");
-            frame.setBounds(100,200, 270, 250);
+            frame.setBounds(100,200, 200, 250);
             String[] listaOrganizmow = new String[]{"Barszcz Sosnowskiego", "Guarana", "Mlecz", "Trawa",
                     "Wilcze Jagody", "Antylopa", "Lis", "Owca", "Wilk", "Zolw"
             };
@@ -268,16 +268,16 @@ public class AppGUI extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     public class InformationContainer extends JPanel{
-        private final String header = "     Strzalki - kierowanie czlowiekiem\n           r- aktywacja specjalnosci     \n\n\n     KOMUNIKATY O ZDARZENIACH: \n\n";
+        private final String header = "Strzalki - kierowanie czlowiekiem\n           r- aktywacja specjalnosci     \n\n\n    KOMUNIKATY O ZDARZENIACH: \n\n";
         private String text = header;
         private final JTextArea textArea;
         public InformationContainer(){
             super();
-            this.setBounds(700+ODSTEP, ODSTEP, 260, mainContainer.getHeight()-ODSTEP*2);
+            this.setBounds(650+ODSTEP, ODSTEP, 220, mainContainer.getHeight()-ODSTEP*2);
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
             textArea = new JTextArea(text);
             textArea.setEditable(false);
-            textArea.setFont(new Font("Arial", Font.BOLD, 13));
+            textArea.setFont(new Font("Arial", Font.BOLD, 12));
             setLayout(new CardLayout());
 
             textArea.setLineWrap(true);
