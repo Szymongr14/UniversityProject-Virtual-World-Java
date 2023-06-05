@@ -39,8 +39,6 @@ public class World {
             Vector<AppGUI.boardField> row = new Vector<AppGUI.boardField>(width);
             for (int j = 0; j < width; j++) {
                 row.add(new AppGUI.boardField(null));
-
-
             }
             Board.add(row);
         }
